@@ -7,6 +7,7 @@ from indic_transliteration import sanscript
 from indic_transliteration.sanscript import transliterate, IAST, HK, DEVANAGARI
 from indic_transliteration import sanscript
 from indic_transliteration.sanscript import transliterate
+import os
 
 import pandas as pd
 
@@ -153,5 +154,9 @@ from flask import send_file
 def download_file():
     return send_file("output.csv", as_attachment=True)
 
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Default to port 5000 if not specified
+    app.run(host="0.0.0.0", port=port, debug=True)
+
