@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transliteration App</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        table { width: 80%; margin: auto; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 10px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .container { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <h2>Upload Image to Get Tamil & English Meaning</h2>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <label>Select Source Language:</label>
+        <select name="language">
+            <option value="Telugu">Telugu</option>
+            <option value="Hindi">Hindi</option>
+        </select>
+        
+        <input type="file" name="file">
+        <button type="submit">Upload & Convert</button>
+        {% if output_data %}
+    <a href="{{ url_for('download_file') }}" class="btn btn-primary">Download CSV</a>
+{% endif %}
+
+    </form>
+    
+    <br>
+    {% if output_data %}
+    <h2>Results:</h2>
+    <table border="1">
+        <tr>
+            <th>Input Word</th>
+            <th>Tamil Pronunciation</th>
+            <th>Tamil Meaning</th>
+            <th>English Pronunciation</th>
+            <th>English Meaning</th>
+        </tr>
+        {% for row in output_data %}
+        <tr>
+            {% for col in row %}
+                <td>{{ col }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p style="color: red;">No text extracted. Try again with a clearer image.</p>
+{% endif %}
+</body>
+</html>
